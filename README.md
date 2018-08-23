@@ -12,7 +12,7 @@ install Config::IniFiles
 install Net::Ping
 install Log::Log4perl
 
-t should run from contab like:
+It should run from contab like:
 */10 * * * * $HOME/perl/saveVideo.pl >> ~/logs/saveVideo.log 2>&1
 
 It record video every 10 min using RTSP to connect to camera.
