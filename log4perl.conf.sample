@@ -12,13 +12,14 @@ log4perl.appender.console.layout = \
 log4perl.appender.console.layout.ConversionPattern = %d %m %n
 
 log4perl.appender.LOGFILE=Log::Log4perl::Appender::File
-log4perl.appender.LOGFILE.filename=$HOME/logs/scripts.log
+log4perl.appender.LOGFILE.filename= \
+	sub { "$ENV{'HOME'}/logs/scripts.log" }
 log4perl.appender.LOGFILE.mode=append
 log4perl.appender.LOGFILE.layout=PatternLayout
 log4perl.appender.LOGFILE.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
 
 log4perl.appender.CIRCLOG=Log::Dispatch::FileRotate
-log4perl.appender.CIRCLOG.filename=$HOME/logs/logrotate.log
+log4perl.appender.CIRCLOG.filename=logrotate.log
 log4perl.appender.CIRCLOG.mode=append
 log4perl.appender.CIRCLOG.max=3
 log4perl.appender.CIRCLOG.DatePattern=yyyy-MM
@@ -32,69 +33,40 @@ log4perl.appender.SYSLOG.ident     = script
 log4perl.appender.SYSLOG.layout    = PatternLayout
 log4perl.appender.SYSLOG.layout.ConversionPattern=%p %F{1} %m%n
 
-log4perl.logger.min00 = DEBUG, LOG00 , SYSLOG
+log4perl.appender.LOG0=Log::Dispatch::FileRotate
+log4perl.appender.LOG0.filename= sub { "$ENV{'HOME'}/logs/saveVideo_1.log" }
+log4perl.appender.LOG0.mode=append
+log4perl.appender.LOG0.max=3
+log4perl.appender.LOG0.DatePattern=yyyy-MM
+log4perl.appender.LOG0.layout=PatternLayout
+log4perl.appender.LOG0.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
+
+log4perl.appender.LOG1=Log::Dispatch::FileRotate
+log4perl.appender.LOG1.filename= sub { "$ENV{'HOME'}/logs/saveVideo_2.log" }
+log4perl.appender.LOG1.mode=append
+log4perl.appender.LOG1.max=3
+log4perl.appender.LOG1.DatePattern=yyyy-MM
+log4perl.appender.LOG1.layout=PatternLayout
+log4perl.appender.LOG1.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
+
+log4perl.logger.scripts = DEBUG, LOGFILE , SYSLOG
+log4perl.additivity.scripts = 0
+
+log4perl.logger.min00 = INFO, LOG0 , SYSLOG
 log4perl.additivity.min00 = 0
 
-log4perl.logger.min10 = DEBUG, LOG10 , SYSLOG
+log4perl.logger.min10 = INFO, LOG1 , SYSLOG
 log4perl.additivity.min10 = 0
 
-log4perl.logger.min20 = DEBUG, LOG20 , SYSLOG
+log4perl.logger.min20 = INFO, LOG0 , SYSLOG
 log4perl.additivity.min20 = 0
 
-log4perl.logger.min30 = DEBUG, LOG30 , SYSLOG
+log4perl.logger.min30 = INFO, LOG1 , SYSLOG
 log4perl.additivity.min30 = 0
 
-log4perl.logger.min40 = DEBUG, LOG40 , SYSLOG
+log4perl.logger.min40 = INFO, LOG0 , SYSLOG
 log4perl.additivity.min40 = 0
 
-log4perl.logger.min50 = DEBUG, LOG50 , SYSLOG
+log4perl.logger.min50 = INFO, LOG1 , SYSLOG
 log4perl.additivity.min50 = 0
-
-log4perl.appender.LOG00=Log::Dispatch::FileRotate
-log4perl.appender.LOG00.filename=$HOME/logs/min00.log
-log4perl.appender.LOG00.mode=append
-log4perl.appender.LOG00.max=3
-log4perl.appender.LOG00.DatePattern=yyyy-MM
-log4perl.appender.LOG00.layout=PatternLayout
-log4perl.appender.LOG00.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
-
-log4perl.appender.LOG10=Log::Dispatch::FileRotate
-log4perl.appender.LOG10.filename=$HOME/logs/min10.log
-log4perl.appender.LOG10.mode=append
-log4perl.appender.LOG10.max=3
-log4perl.appender.LOG10.DatePattern=yyyy-MM
-log4perl.appender.LOG10.layout=PatternLayout
-log4perl.appender.LOG10.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
-
-log4perl.appender.LOG20=Log::Dispatch::FileRotate
-log4perl.appender.LOG20.filename=$HOME/logs/min20.log
-log4perl.appender.LOG20.mode=append
-log4perl.appender.LOG20.max=3
-log4perl.appender.LOG20.DatePattern=yyyy-MM
-log4perl.appender.LOG20.layout=PatternLayout
-log4perl.appender.LOG20.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
-
-log4perl.appender.LOG30=Log::Dispatch::FileRotate
-log4perl.appender.LOG30.filename=$HOME/logs/min30.log
-log4perl.appender.LOG30.mode=append
-log4perl.appender.LOG30.max=3
-log4perl.appender.LOG30.DatePattern=yyyy-MM
-log4perl.appender.LOG30.layout=PatternLayout
-log4perl.appender.LOG30.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
-
-log4perl.appender.LOG40=Log::Dispatch::FileRotate
-log4perl.appender.LOG40.filename=$HOME/logs/min40.log
-log4perl.appender.LOG40.mode=append
-log4perl.appender.LOG40.max=3
-log4perl.appender.LOG40.DatePattern=yyyy-MM
-log4perl.appender.LOG40.layout=PatternLayout
-log4perl.appender.LOG40.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
-
-log4perl.appender.LOG50=Log::Dispatch::FileRotate
-log4perl.appender.LOG50.filename=$HOME/logs/min50.log
-log4perl.appender.LOG50.mode=append
-log4perl.appender.LOG50.max=3
-log4perl.appender.LOG50.DatePattern=yyyy-MM
-log4perl.appender.LOG50.layout=PatternLayout
-log4perl.appender.LOG50.layout.ConversionPattern= %d %-5p [%3L:%F{1}] %m%n
 

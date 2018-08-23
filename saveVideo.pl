@@ -7,7 +7,9 @@ use Config::IniFiles;
 use Log::Log4perl qw(:easy);
 use Net::Ping;
 
-my $basedir = "/home/ffmpeg/perl";
+my $HOME = $ENV{'HOME'};
+
+my $basedir = "$HOME/perl";
 
 # need date/time to create file with timestamp, choose log file and check if concatenate video
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
@@ -92,7 +94,7 @@ sub genConcatenatedVideo {
     my $camera = shift;
     my $data   = shift;
 
-    my ($location,$IP) = getCameraData($camera);
+    my ($location,$IP, $URI) = getCameraData($camera);
 
     $logger->info("starting concatenated video generation for $location/$IP");
 
@@ -127,7 +129,7 @@ sub genShortVideo {
     my $camera = shift;
     my $data   = shift;
 
-    my ($location,$IP) = getCameraData($camera);
+    my ($location,$IP, $URI) = getCameraData($camera);
 
     $logger->info("starting small/short video generation for $location/$IP - $data");
 
@@ -150,7 +152,7 @@ sub recordVideo {
     my $camera = shift;
     my $data   = shift;
 
-    my ($location,$IP) = getCameraData($camera);
+    my ($location,$IP, $URI) = getCameraData($camera);
 
     $logger->info("[$$] starting recordVideo for $location/$IP");
 
@@ -176,7 +178,7 @@ sub recordVideo {
 	my $sttime = time;
 	my $file = $location . "_" . $IP . "_" . $data . ".mkv";
         $logger->info("[$$] Recording $interval secs video of $location");
-	my $ret = `$binpath/ffmpeg -v $ffmpeg_verbose $ffmpeg_in_parms -rtsp_transport tcp -t $interval  -stimeout $tcp_timeout -i "rtsp://$IP/cam/realmonitor?channel=1&subtype=0&unicast=true&proto=Onvif" $ffmped_out_parms -metadata title="$camera,$IP,$data" $savepath/$IP/$file 2>&1`;
+	my $ret = `$binpath/ffmpeg -v $ffmpeg_verbose $ffmpeg_in_parms -rtsp_transport tcp -t $interval  -stimeout $tcp_timeout -i "rtsp://$IP/$URI" $ffmped_out_parms -metadata title="$camera,$IP,$data" $savepath/$IP/$file 2>&1`;
 	$elapsed = time - $sttime + 1;
 
 	$ret =~ s/\n/ /gs;
@@ -268,7 +270,8 @@ sub getCameraData {
 
    my $location = getConfigVal("$camera","location");
    my $IP       = getConfigVal("$camera","IP");
+   my $URI      = getConfigVal("$camera","URI");
 
-   return ( $location, $IP );
+   return ( $location, $IP , $URI);
 }
 
