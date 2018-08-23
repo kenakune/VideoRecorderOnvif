@@ -1,4 +1,4 @@
-It doesn't have any authentication, it just list video files to make easier to watch inthe brower.
+It doesn't have any authentication, it just list video files to make easier to watch in the brower.
 
 Do not use in web server accessible from Internet because it would expose your videos to others.
 
